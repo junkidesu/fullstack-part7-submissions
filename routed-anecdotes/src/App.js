@@ -101,6 +101,18 @@ const CreateNew = (props) => {
 
 }
 
+const Notification = ({ notification }) => {
+  if (notification === '') {
+    return null
+  }
+  
+  return (
+    <div>
+      {notification}
+    </div>
+  )
+}
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -153,6 +165,7 @@ const App = () => {
       <h1>Software anecdotes</h1>
       <Menu />
 
+      <Notification notification={notification} />
       <Routes>
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote} />} />
