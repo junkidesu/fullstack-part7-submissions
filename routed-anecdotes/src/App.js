@@ -35,6 +35,7 @@ const Anecdote = ({ anecdote }) => (
     <p>for more info see <a href={anecdote.info}>{anecdote.info}</a></p>
   </div>
 )
+
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
@@ -143,6 +144,7 @@ const App = () => {
 
         <Routes>
           <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
+          <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdotes[0]} />} />
           <Route path='/about' element={<About />} />
           <Route path='/create' element={<CreateNew addNew={addNew} />} />
         </Routes>
