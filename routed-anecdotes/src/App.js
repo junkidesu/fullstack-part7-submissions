@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   Routes, Route, Link,
-  useNavigate
+  useMatch, useNavigate
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -118,8 +118,14 @@ const App = () => {
       id: 2
     }
   ])
+  
 
   const [notification, setNotification] = useState('')
+
+  const match = useMatch('/anecdotes/:id')
+  const anecdote = match
+    ? anecdotes.find(a => a.id === Number(match.params.id))
+    : null
 
   const navigate = useNavigate()
   const addNew = (anecdote) => {
@@ -149,7 +155,7 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
-        <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdotes[0]} />} />
+        <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote} />} />
         <Route path='/about' element={<About />} />
         <Route path='/create' element={<CreateNew addNew={addNew} />} />
       </Routes>
