@@ -130,14 +130,9 @@ const App = () => {
       id: 2
     }
   ])
-  
+
 
   const [notification, setNotification] = useState('')
-
-  const match = useMatch('/anecdotes/:id')
-  const anecdote = match
-    ? anecdotes.find(a => a.id === Number(match.params.id))
-    : null
 
   const navigate = useNavigate()
   const addNew = (anecdote) => {
@@ -152,6 +147,11 @@ const App = () => {
 
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
+
+  const match = useMatch('/anecdotes/:id')
+  const anecdote = match
+    ? anecdoteById(Number(match.params.id))
+    : null
 
   const vote = (id) => {
     const anecdote = anecdoteById(id)
