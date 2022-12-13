@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import {
-  Routes, Route, Link
+  Routes, Route, Link,
+  useNavigate
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -120,9 +121,11 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
+  const navigate = useNavigate()
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    navigate('/')
   }
 
   const anecdoteById = (id) =>
