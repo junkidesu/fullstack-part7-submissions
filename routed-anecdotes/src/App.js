@@ -105,7 +105,7 @@ const Notification = ({ notification }) => {
   if (notification === '') {
     return null
   }
-  
+
   return (
     <div>
       {notification}
@@ -144,6 +144,10 @@ const App = () => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
     navigate('/')
+    setNotification(`a new anecdote ${anecdote.content} created!`)
+    setTimeout(() => {
+      setNotification('')
+    }, 5000)
   }
 
   const anecdoteById = (id) =>
