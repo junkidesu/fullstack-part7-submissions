@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
-import { setUser, loginUser, removeUser } from './reducers/userReducer'
+import { setUser, loginUser, logoutUser } from './reducers/userReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -46,12 +46,7 @@ const App = () => {
   const handleLogout = () => {
     console.log('logging out')
 
-    dispatch(removeUser())
-    blogService.setToken(null)
-
-    window.localStorage.removeItem('loggedInUser')
-
-    dispatch(setNotification('logged out', 5))
+    dispatch(logoutUser())
   }
 
   const like = async (id) => {
