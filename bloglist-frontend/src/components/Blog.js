@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+
 const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
   const [full, setFull] = useState(false)
 
@@ -38,11 +39,12 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
         {blog.title} {blog.author}
         <button onClick={() => setFull(!full)}>{full ? 'hide' : 'view'}</button>
       </div>
+
       <div style={detailsStyle} className="blogDetails">
-        {blog.url} <br />
-        {blog.likes}
+        <div>{blog.url}</div>
+        <div>{blog.likes}</div>
         <button onClick={handleLikeBlog}>like</button> <br />
-        {blog.user.name} <br />
+        <div>{blog.user.name}</div>
         {username === blog.user.username ? (
           <button onClick={handleDeleteBlog}>remove</button>
         ) : null}
