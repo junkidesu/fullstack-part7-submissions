@@ -76,6 +76,7 @@ const App = () => {
 
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       dispatch(deleteBlog(id))
+      dispatch(setNotification(`deleted '${blog.title}'`, 5))
     }
   }
 
