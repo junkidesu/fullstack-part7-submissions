@@ -18,8 +18,8 @@ beforeEach(() => {
     user: {
       name: 'name',
       username: 'username',
-      id: 'id'
-    }
+      id: 'id',
+    },
   }
   mockDeleteHandler = jest.fn()
   mockLikeHandler = jest.fn()
@@ -29,7 +29,7 @@ beforeEach(() => {
       blog={blog}
       deleteBlog={mockDeleteHandler}
       likeBlog={mockLikeHandler}
-      username='username'
+      username="username"
     />
   ).container
 })

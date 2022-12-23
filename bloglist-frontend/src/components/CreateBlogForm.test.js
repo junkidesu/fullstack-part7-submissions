@@ -8,11 +8,7 @@ test('the event handler is called with the right details', async () => {
   const mockCreateBlog = jest.fn()
   const user = userEvent.setup()
 
-  render(
-    <CreateBlogForm
-      createBlog={mockCreateBlog}
-    />
-  )
+  render(<CreateBlogForm createBlog={mockCreateBlog} />)
 
   const title = screen.getByPlaceholderText('Title')
   const author = screen.getByPlaceholderText('Author')

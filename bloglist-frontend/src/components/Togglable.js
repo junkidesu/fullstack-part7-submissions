@@ -5,27 +5,23 @@ const Togglable = ({ children, buttonLabel }) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = {
-    'display': visible
-      ? 'none'
-      : ''
+    display: visible ? 'none' : '',
   }
 
   const showWhenVisible = {
-    'display': visible
-      ? ''
-      : 'none'
+    display: visible ? '' : 'none',
   }
 
   return (
     <div>
       <div style={showWhenVisible}>
         {children}
-        <button onClick={() => setVisible(false)} className='hide-button'>
-                    cancel
+        <button onClick={() => setVisible(false)} className="hide-button">
+          cancel
         </button>
       </div>
       <div style={hideWhenVisible}>
-        <button onClick={() => setVisible(true)} className='show-button'>
+        <button onClick={() => setVisible(true)} className="show-button">
           {buttonLabel}
         </button>
       </div>
@@ -34,7 +30,7 @@ const Togglable = ({ children, buttonLabel }) => {
 }
 
 Togglable.propTypes = {
-  buttonLabel: PropTypes.string.isRequired
+  buttonLabel: PropTypes.string.isRequired,
 }
 
 export default Togglable

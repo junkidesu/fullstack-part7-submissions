@@ -15,9 +15,7 @@ const App = () => {
   const [success, setSuccess] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   useEffect(() => {
@@ -30,12 +28,13 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async event => {
+  const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
       const user = await loginService.login({
-        username, password
+        username,
+        password,
       })
 
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
@@ -74,7 +73,7 @@ const App = () => {
     }, 5000)
   }
 
-  const createBlog = async newBlog => {
+  const createBlog = async (newBlog) => {
     try {
       const addedBlog = await blogService.create(newBlog)
 
@@ -97,14 +96,14 @@ const App = () => {
   const likeBlog = async (id, changedBlog) => {
     console.log(`like ${id}`)
     const updatedBlog = await blogService.update(id, changedBlog)
-    setBlogs(blogs.map(b => b.id.toString() !== id ? b : updatedBlog))
+    setBlogs(blogs.map((b) => (b.id.toString() !== id ? b : updatedBlog)))
   }
 
-  const deleteBlog = async id => {
+  const deleteBlog = async (id) => {
     try {
       console.log(`delete ${id}`)
       await blogService.remove(id)
-      setBlogs(blogs.filter(b => b.id !== id))
+      setBlogs(blogs.filter((b) => b.id !== id))
       setSuccess(true)
       setMessage('deleted successfully')
       setTimeout(() => {
@@ -130,7 +129,7 @@ const App = () => {
           <div>
             username
             <input
-              id='username'
+              id="username"
               value={username}
               onChange={({ target }) => setUsername(target.value)}
             />
@@ -138,15 +137,13 @@ const App = () => {
           <div>
             password
             <input
-              id='password'
+              id="password"
               type="password"
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button id='login-button'>
-            log in
-          </button>
+          <button id="login-button">log in</button>
         </form>
       </div>
     )
@@ -160,19 +157,17 @@ const App = () => {
 
       <p>
         {user.name} logged in
-        <button onClick={handleLogout}>
-          log out
-        </button>
+        <button onClick={handleLogout}>log out</button>
       </p>
 
       <Togglable buttonLabel="create new">
         <CreateBlogForm createBlog={createBlog} />
       </Togglable>
 
-      <div id='blogs'>
+      <div id="blogs">
         {blogs
           .sort((b1, b2) => b1.likes - b2.likes)
-          .map(blog =>
+          .map((blog) => (
             <Blog
               key={blog.id}
               blog={blog}
@@ -180,7 +175,7 @@ const App = () => {
               deleteBlog={deleteBlog}
               username={user.username}
             />
-          )}
+          ))}
       </div>
     </div>
   )
