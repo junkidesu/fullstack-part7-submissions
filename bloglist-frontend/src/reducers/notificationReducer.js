@@ -7,9 +7,19 @@ const notificationSlice = createSlice({
     setMessage(state, action) {
       return action.payload
     },
+    // eslint-disable-next-line no-unused-vars
+    resetMessage(state, action) {
+      return null
+    },
   },
 })
 
-export const { setMessage } = notificationSlice.actions
+export const setNotification = (message, duration) => {
+  return async (dispatch) => {
+    dispatch(setMessage(message))
+    setTimeout(() => dispatch(resetMessage()), duration * 1000)
+  }
+}
+export const { setMessage, resetMessage } = notificationSlice.actions
 
 export default notificationSlice.reducer
