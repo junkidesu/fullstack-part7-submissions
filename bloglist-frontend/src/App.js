@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
-import { setUser, removeUser } from './reducers/userReducer'
+import { setUser, loginUser, removeUser } from './reducers/userReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
-import loginService from './services/login'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
 
@@ -36,25 +35,12 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
-    try {
-      const user = await loginService.login({
+    dispatch(
+      loginUser({
         username,
         password,
       })
-
-      window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-
-      dispatch(setUser(user))
-      blogService.setToken(user.token)
-
-      setUsername('')
-      setPassword('')
-
-      dispatch(setNotification(`logged in as ${user.username}`, 5))
-    } catch (error) {
-      console.log(error)
-      dispatch(setNotification('wrong username or password', 5))
-    }
+    )
   }
 
   const handleLogout = () => {
