@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs, likeBlog } from './reducers/blogReducer'
+import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -64,13 +64,19 @@ const App = () => {
   }
 
   const like = async (id) => {
-    const blog = blogs.find(b => b.id === id)
+    const blog = blogs.find((b) => b.id === id)
     dispatch(likeBlog(blog))
     dispatch(setNotification(`liked blog '${blog.title}'`, 5))
   }
 
-  const deleteBlog = async (id) => {
+  const remove = async (id) => {
     console.log('delete', id)
+
+    const blog = blogs.find((b) => b.id === id)
+
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      dispatch(deleteBlog(id))
+    }
   }
 
   if (!user) {
@@ -120,16 +126,15 @@ const App = () => {
       </Togglable>
 
       <div id="blogs">
-        {blogs
-          .map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              like={() => like(blog.id)}
-              deleteBlog={deleteBlog}
-              username={user.username}
-            />
-          ))}
+        {blogs.map((blog) => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            like={() => like(blog.id)}
+            deleteBlog={() => remove(blog.id)}
+            username={user.username}
+          />
+        ))}
       </div>
     </div>
   )

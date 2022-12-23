@@ -19,12 +19,6 @@ const Blog = ({ blog, like, deleteBlog, username }) => {
     display: full ? '' : 'none',
   }
 
-  const handleDeleteBlog = async () => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      await deleteBlog(blog.id.toString())
-    }
-  }
-
   return (
     <div style={blogStyle} className="blog">
       <div>
@@ -38,7 +32,7 @@ const Blog = ({ blog, like, deleteBlog, username }) => {
         <button onClick={like}>like</button> <br />
         <div>{blog.user.name}</div>
         {username === blog.user.username ? (
-          <button onClick={handleDeleteBlog}>remove</button>
+          <button onClick={deleteBlog}>remove</button>
         ) : null}
       </div>
     </div>
