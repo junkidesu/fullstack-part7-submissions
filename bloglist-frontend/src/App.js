@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loadUsers } from './reducers/usersReducer'
 import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import Users from './components/Users'
 import Togglable from './components/Togglable'
@@ -86,23 +86,21 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <div>
-        <h2>blogs</h2>
+    <div>
+      <h2>blogs</h2>
 
-        <Notification />
+      <Notification />
 
-        <p>
-          {user.name} logged in
-          <button onClick={handleLogout}>log out</button>
-        </p>
+      <p>
+        {user.name} logged in
+        <button onClick={handleLogout}>log out</button>
+      </p>
 
-        <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/users' element={<Users />} />
-        </Routes>
-      </div>
-    </Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
+    </div>
   )
 }
 
