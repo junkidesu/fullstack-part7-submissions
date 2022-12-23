@@ -63,10 +63,6 @@ const App = () => {
     dispatch(setNotification('logged out', 5))
   }
 
-  const createBlog = async (newBlog) => {
-    console.log('create blog', newBlog.title)
-  }
-
   const likeBlog = async (id, changedBlog) => {
     console.log('like', id, changedBlog.title)
   }
@@ -118,7 +114,7 @@ const App = () => {
       </p>
 
       <Togglable buttonLabel="create new">
-        <CreateBlogForm createBlog={createBlog} />
+        <CreateBlogForm />
       </Togglable>
 
       <div id="blogs">
