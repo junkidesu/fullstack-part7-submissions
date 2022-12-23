@@ -3,18 +3,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loadUsers } from './reducers/usersReducer'
 import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import BlogList from './components/BlogList'
+import Users from './components/Users'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
+
+const Home = () => (
+  <div>
+    <Togglable buttonLabel="create new">
+      <CreateBlogForm />
+    </Togglable>
+
+    <BlogList />
+  </div>
+)
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const user = useSelector(({ user }) => user)
-
-  const users = useSelector(({ users }) => users)
 
   const dispatch = useDispatch()
 
@@ -76,22 +86,23 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <Router>
+      <div>
+        <h2>blogs</h2>
 
-      <Notification />
+        <Notification />
 
-      <p>
-        {user.name} logged in
-        <button onClick={handleLogout}>log out</button>
-      </p>
+        <p>
+          {user.name} logged in
+          <button onClick={handleLogout}>log out</button>
+        </p>
 
-      <Togglable buttonLabel="create new">
-        <CreateBlogForm />
-      </Togglable>
-
-      <BlogList />
-    </div>
+        <Routes>
+          <Route path='/' element={<Home />}/>
+          <Route path='/users' element={<Users />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
