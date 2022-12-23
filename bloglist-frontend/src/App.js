@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -11,8 +13,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
-  const [success, setSuccess] = useState(false)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -44,19 +46,10 @@ const App = () => {
       setUsername('')
       setPassword('')
 
-      setSuccess(true)
-      setMessage(`logged in as ${user.username}`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification(`logged in as ${user.username}`, 5))
     } catch (exception) {
       console.log(exception)
-
-      setSuccess(false)
-      setMessage('wrong username or password')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification('wrong username or password', 5))
     }
   }
 
@@ -65,12 +58,7 @@ const App = () => {
     setUser(null)
     blogService.setToken(null)
     window.localStorage.removeItem('loggedInUser')
-
-    setSuccess(true)
-    setMessage('logged out')
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
+    dispatch(setNotification('logged out', 5))
   }
 
   const createBlog = async (newBlog) => {
@@ -78,18 +66,9 @@ const App = () => {
       const addedBlog = await blogService.create(newBlog)
 
       setBlogs(blogs.concat(addedBlog))
-
-      setSuccess(true)
-      setMessage(`a new blog ${addedBlog.title} by ${addedBlog.author} added`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`, 5))
     } catch (exception) {
-      setSuccess(false)
-      setMessage(exception.response.data.error)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification(exception.response.data.error, 5))
     }
   }
 
@@ -104,17 +83,9 @@ const App = () => {
       console.log(`delete ${id}`)
       await blogService.remove(id)
       setBlogs(blogs.filter((b) => b.id !== id))
-      setSuccess(true)
-      setMessage('deleted successfully')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification('deleted successfully', 5))
     } catch (exception) {
-      setSuccess(false)
-      setMessage(exception.response.data.error)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch(setNotification(exception.response.data.error, 5))
     }
   }
 
@@ -123,7 +94,7 @@ const App = () => {
       <div>
         <h2>log in to application</h2>
 
-        <Notification message={message} success={success} />
+        <Notification />
 
         <form onSubmit={handleLogin}>
           <div>
@@ -153,7 +124,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-      <Notification message={message} success={success} />
+      <Notification />
 
       <p>
         {user.name} logged in
