@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import blogServices from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 const blogSlice = createSlice({
   name: 'blogs',
@@ -22,9 +23,17 @@ export const initializeBlogs = () => async (dispatch) => {
 }
 
 export const createBlog = (blog) => async (dispatch) => {
-  const addedBlog = await blogServices.create(blog)
+  try {
+    const addedBlog = await blogServices.create(blog)
 
-  dispatch(appendBlog(addedBlog))
+    dispatch(appendBlog(addedBlog))
+
+    dispatch(setNotification(`added blog '${blog.title}' by ${blog.author}`, 5))
+  } catch (error) {
+    console.log(error.response.data.error)
+
+    dispatch(setNotification(error.response.data.error, 5))
+  }
 }
 
 export default blogSlice.reducer
