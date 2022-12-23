@@ -1,4 +1,7 @@
-const Users = ({ users }) => {
+import { useSelector } from 'react-redux'
+const Users = () => {
+  const users = useSelector(({ users }) => users)
+
   return (
     <div>
       <h2>Users</h2>
