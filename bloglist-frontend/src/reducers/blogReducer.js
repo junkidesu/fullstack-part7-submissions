@@ -12,10 +12,15 @@ const blogSlice = createSlice({
     appendBlog(state, action) {
       return [...state, action.payload]
     },
+    setBlog(state, action) {
+      const blog = action.payload
+
+      return state.map((b) => (b.id === blog.id ? blog : b))
+    },
   },
 })
 
-export const { setBlogs, appendBlog } = blogSlice.actions
+export const { setBlogs, appendBlog, setBlog } = blogSlice.actions
 
 export const initializeBlogs = () => async (dispatch) => {
   const blogs = await blogServices.getAll()
@@ -34,6 +39,15 @@ export const createBlog = (blog) => async (dispatch) => {
 
     dispatch(setNotification(error.response.data.error, 5))
   }
+}
+
+export const likeBlog = (blog) => async (dispatch) => {
+  const likedBlog = await blogServices.update(blog.id, {
+    ...blog,
+    likes: blog.likes + 1,
+  })
+
+  dispatch(setBlog(likedBlog))
 }
 
 export default blogSlice.reducer
