@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
+import { setUser, removeUser } from './reducers/userReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -12,8 +13,8 @@ import CreateBlogForm from './components/CreateBlogForm'
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
 
+  const user = useSelector(({ user }) => user)
   const blogs = useSelector(({ blogs }) => blogs)
 
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const App = () => {
 
     if (loggedInUser) {
       const user = JSON.parse(loggedInUser)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -43,23 +44,27 @@ const App = () => {
 
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
 
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
+
       setUsername('')
       setPassword('')
 
       dispatch(setNotification(`logged in as ${user.username}`, 5))
-    } catch (exception) {
-      console.log(exception)
+    } catch (error) {
+      console.log(error)
       dispatch(setNotification('wrong username or password', 5))
     }
   }
 
   const handleLogout = () => {
     console.log('logging out')
-    setUser(null)
+
+    dispatch(removeUser())
     blogService.setToken(null)
+
     window.localStorage.removeItem('loggedInUser')
+
     dispatch(setNotification('logged out', 5))
   }
 
