@@ -7,8 +7,10 @@ const Users = () => {
       <h2>Users</h2>
       <table>
         <thead>
-          <th></th>
-          <th>blogs created</th>
+          <tr>
+            <th></th>
+            <th>blogs created</th>
+          </tr>
         </thead>
 
         <tbody>
