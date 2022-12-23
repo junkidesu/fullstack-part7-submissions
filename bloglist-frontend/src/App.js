@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loadUsers } from './reducers/usersReducer'
 import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useMatch } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import Users from './components/Users'
+import User from './components/User'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
@@ -25,6 +26,10 @@ const App = () => {
   const [password, setPassword] = useState('')
 
   const user = useSelector(({ user }) => user)
+  const users = useSelector(({ users }) => users)
+
+  const match = useMatch('/users/:id')
+  const foundUser = match ? users.find((u) => u.id === match.params.id) : null
 
   const dispatch = useDispatch()
 
@@ -99,6 +104,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User user={foundUser} />} />
       </Routes>
     </div>
   )
