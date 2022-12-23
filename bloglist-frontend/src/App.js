@@ -66,6 +66,7 @@ const App = () => {
   const like = async (id) => {
     const blog = blogs.find(b => b.id === id)
     dispatch(likeBlog(blog))
+    dispatch(setNotification(`liked blog '${blog.title}'`, 5))
   }
 
   const deleteBlog = async (id) => {
