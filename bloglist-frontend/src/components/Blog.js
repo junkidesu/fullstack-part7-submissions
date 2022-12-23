@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
+const Blog = ({ blog, like, deleteBlog, username }) => {
   const [full, setFull] = useState(false)
 
   const blogStyle = {
@@ -17,14 +17,6 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
 
   const detailsStyle = {
     display: full ? '' : 'none',
-  }
-
-  const handleLikeBlog = async () => {
-    const changedBlog = {
-      ...blog,
-      likes: blog.likes + 1,
-    }
-    await likeBlog(blog.id.toString(), changedBlog)
   }
 
   const handleDeleteBlog = async () => {
@@ -43,7 +35,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
       <div style={detailsStyle} className="blogDetails">
         <div>{blog.url}</div>
         <div>{blog.likes}</div>
-        <button onClick={handleLikeBlog}>like</button> <br />
+        <button onClick={like}>like</button> <br />
         <div>{blog.user.name}</div>
         {username === blog.user.username ? (
           <button onClick={handleDeleteBlog}>remove</button>
@@ -55,7 +47,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, username }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  likeBlog: PropTypes.func.isRequired,
+  like: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
 }

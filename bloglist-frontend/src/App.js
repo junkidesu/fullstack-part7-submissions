@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs } from './reducers/blogReducer'
+import { initializeBlogs, likeBlog } from './reducers/blogReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -63,8 +63,9 @@ const App = () => {
     dispatch(setNotification('logged out', 5))
   }
 
-  const likeBlog = async (id, changedBlog) => {
-    console.log('like', id, changedBlog.title)
+  const like = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+    dispatch(likeBlog(blog))
   }
 
   const deleteBlog = async (id) => {
@@ -123,7 +124,7 @@ const App = () => {
             <Blog
               key={blog.id}
               blog={blog}
-              likeBlog={likeBlog}
+              like={() => like(blog.id)}
               deleteBlog={deleteBlog}
               username={user.username}
             />
