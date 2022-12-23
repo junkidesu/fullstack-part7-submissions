@@ -42,4 +42,16 @@ export const logoutUser = () => async (dispatch) => {
   dispatch(setNotification('logged out', 5))
 }
 
+export const restoreUser = () => async (dispatch) => {
+  const loggedInUser = window.localStorage.getItem('loggedInUser')
+
+  if (loggedInUser) {
+    const user = JSON.parse(loggedInUser)
+
+    dispatch(setUser(user))
+
+    blogService.setToken(user.token)
+  }
+}
+
 export default userSlice.reducer

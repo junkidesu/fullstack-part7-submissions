@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
-import { setUser, loginUser, logoutUser } from './reducers/userReducer'
+import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
-import blogService from './services/blogs'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
 
@@ -23,13 +22,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedInUser = window.localStorage.getItem('loggedInUser')
-
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser)
-      dispatch(setUser(user))
-      blogService.setToken(user.token)
-    }
+    dispatch(restoreUser())
   }, [])
 
   const handleLogin = async (event) => {
