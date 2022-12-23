@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -9,15 +10,16 @@ import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const blogs = useSelector(({ blogs }) => blogs)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -62,31 +64,15 @@ const App = () => {
   }
 
   const createBlog = async (newBlog) => {
-    try {
-      const addedBlog = await blogService.create(newBlog)
-
-      setBlogs(blogs.concat(addedBlog))
-      dispatch(setNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`, 5))
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
+    console.log('create blog', newBlog.title)
   }
 
   const likeBlog = async (id, changedBlog) => {
-    console.log(`like ${id}`)
-    const updatedBlog = await blogService.update(id, changedBlog)
-    setBlogs(blogs.map((b) => (b.id.toString() !== id ? b : updatedBlog)))
+    console.log('like', id, changedBlog.title)
   }
 
   const deleteBlog = async (id) => {
-    try {
-      console.log(`delete ${id}`)
-      await blogService.remove(id)
-      setBlogs(blogs.filter((b) => b.id !== id))
-      dispatch(setNotification('deleted successfully', 5))
-    } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 5))
-    }
+    console.log('delete', id)
   }
 
   if (!user) {
@@ -137,7 +123,6 @@ const App = () => {
 
       <div id="blogs">
         {blogs
-          .sort((b1, b2) => b1.likes - b2.likes)
           .map((blog) => (
             <Blog
               key={blog.id}
