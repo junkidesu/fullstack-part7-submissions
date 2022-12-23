@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
+import { loadUsers } from './reducers/usersReducer'
 import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
 import Blog from './components/Blog'
 import Togglable from './components/Togglable'
@@ -14,11 +15,13 @@ const App = () => {
 
   const user = useSelector(({ user }) => user)
   const blogs = useSelector(({ blogs }) => blogs)
+  const users = useSelector(({ users }) => users)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(loadUsers())
   }, [])
 
   useEffect(() => {
