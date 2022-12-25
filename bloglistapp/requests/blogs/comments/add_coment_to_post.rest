@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/blogs/:id/comments
+Content-Type: application/json
+Authorization: bearer token
+
+{
+    "body": ""
+}
