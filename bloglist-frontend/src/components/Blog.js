@@ -1,20 +1,4 @@
 const Blog = ({ blog, like, deleteBlog, username }) => {
-  // const [full, setFull] = useState(false)
-
-  // const blogStyle = {
-  //   borderWidth: '1px',
-  //   borderStyle: 'solid',
-  //   borderColor: 'black',
-  //   borderRadius: '5px',
-  //   paddingTop: '10px',
-  //   paddingLeft: '2px',
-  //   marginTop: '5px',
-  //   marginBottom: '5px',
-  // }
-
-  // const detailsStyle = {
-  //   display: full ? '' : 'none',
-  // }
   if (!blog) return null
 
   return (
