@@ -1,5 +1,19 @@
+import { useDispatch } from 'react-redux'
+import { commentOnBlog } from '../reducers/blogReducer'
+
 const Blog = ({ blog, like, deleteBlog, username }) => {
   if (!blog) return null
+
+  const dispatch = useDispatch()
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const comment = event.target.comment.value
+    dispatch(commentOnBlog(blog.id, comment))
+
+    event.target.comment.value = ''
+  }
 
   return (
     <div>
@@ -17,8 +31,15 @@ const Blog = ({ blog, like, deleteBlog, username }) => {
 
       <h4>comments</h4>
 
+      <form onSubmit={handleSubmit}>
+        <input name="comment" />
+        <button type="submit">add comment</button>
+      </form>
+
       <ul>
-        {blog.comments.map(c => <li key={c}>{c.body}</li>)}
+        {blog.comments.map((c) => (
+          <li key={c.body}>{c.body}</li>
+        ))}
       </ul>
     </div>
   )
