@@ -18,8 +18,8 @@ const blogSlice = createSlice({
       return state.map((b) => (b.id === blog.id ? blog : b))
     },
     removeBlog(state, action) {
-      return state.filter(b => b.id !== action.payload)
-    }
+      return state.filter((b) => b.id !== action.payload)
+    },
   },
 })
 

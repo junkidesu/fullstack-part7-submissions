@@ -31,7 +31,7 @@ const BlogList = () => {
         <Blog
           key={blog.id}
           blog={blog}
-          like={() => like(blog.id)}
+          likeBlog={() => like(blog.id)}
           deleteBlog={() => remove(blog.id)}
           username={user.username}
         />
