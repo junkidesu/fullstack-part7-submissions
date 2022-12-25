@@ -23,6 +23,42 @@ const Home = () => (
   </div>
 )
 
+const Menu = () => {
+  const menuStyle = {
+    backgroundColor: 'lightgray',
+    padding: '5px',
+    marginBottom: '15px',
+  }
+
+  const padding = {
+    paddingRight: '5px',
+  }
+
+  const dispatch = useDispatch()
+
+  const user = useSelector(({ user }) => user)
+
+  const handleLogout = () => {
+    console.log('logging out')
+
+    dispatch(logoutUser())
+  }
+
+  return (
+    <div style={menuStyle}>
+      <Link to="/" style={padding}>
+        blogs
+      </Link>
+      <Link to="/users" style={padding}>
+        users
+      </Link>
+      <span style={padding}>
+        {user.name} logged in <button onClick={handleLogout}>log out</button>
+      </span>
+    </div>
+  )
+}
+
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -59,12 +95,6 @@ const App = () => {
         password,
       })
     )
-  }
-
-  const handleLogout = () => {
-    console.log('logging out')
-
-    dispatch(logoutUser())
   }
 
   const like = async (id) => {
@@ -119,12 +149,9 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-      <Notification />
+      <Menu />
 
-      <p>
-        {user.name} logged in
-        <button onClick={handleLogout}>log out</button>
-      </p>
+      <Notification />
 
       <Routes>
         <Route path="/" element={<Home />} />
