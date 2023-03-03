@@ -10,25 +10,11 @@ import BlogList from './components/BlogList'
 import Blog from './components/Blog'
 import Users from './components/Users'
 import User from './components/User'
-import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
 import { Container, AppBar, Toolbar, IconButton, Button } from '@mui/material'
 
-const Home = () => {
-  const user = useSelector(({ user }) => user)
-  return (
-    <div>
-      {!user ? null : (
-        <Togglable buttonLabel="create new">
-          <CreateBlogForm />
-        </Togglable>
-      )}
-
-      <BlogList />
-    </div>
-  )
-}
+const Home = () => <BlogList />
 
 const Menu = () => {
   const dispatch = useDispatch()
@@ -58,6 +44,11 @@ const Menu = () => {
           <Button color="inherit" component={Link} to="/">
             blogs
           </Button>
+          {user ? (
+            <Button color="inherit" component={Link} to="/createBlog">
+              new blog
+            </Button>
+          ) : null}
           <Button color="inherit" component={Link} to="/users">
             users
           </Button>
@@ -102,7 +93,7 @@ const App = () => {
 
   const like = async (id) => {
     const blog = blogs.find((b) => b.id === id)
-    await dispatch(likeBlog(blog))
+    dispatch(likeBlog(blog))
     dispatch(setNotification(`liked blog '${blog.title}'`, 5))
   }
 
@@ -154,6 +145,12 @@ const App = () => {
             }
           />
           <Route path="/login" element={<LoginForm />} />
+          <Route
+            path="/createBlog"
+            element={
+              user ? <CreateBlogForm /> : <Navigate replace to="/login" />
+            }
+          />
         </Routes>
       </div>
     </Container>
