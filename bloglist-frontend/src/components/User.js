@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material'
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material'
 const User = ({ user }) => {
   if (!user) return null
 
   return (
     <div>
       <h2>{user.name}</h2>
-      <TableContainer>
+      <TableContainer component={Paper} xs={{ my: '10px' }}>
         <Table>
           <TableHead>
             <TableRow>

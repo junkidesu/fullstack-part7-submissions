@@ -7,6 +7,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Paper
 } from '@mui/material'
 
 const Users = () => {
@@ -15,12 +16,12 @@ const Users = () => {
   return (
     <div>
       <h2>Users</h2>
-      <TableContainer>
+      <TableContainer component={Paper} sx={{ my: '10px' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>User</TableCell>
-              <TableCell>Blogs Created</TableCell>
+              <TableCell><b>User</b></TableCell>
+              <TableCell><b>Blogs Created</b></TableCell>
             </TableRow>
           </TableHead>
 

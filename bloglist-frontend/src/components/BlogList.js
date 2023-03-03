@@ -14,12 +14,12 @@ const BlogList = () => {
   const blogs = useSelector(({ blogs }) => blogs)
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ my: '10px' }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell scope="col" component="th">Blog Title</TableCell>
-            <TableCell scope="col" component="th">Uploaded By</TableCell>
+            <TableCell scope="col" component="th"><b>Blog Title</b></TableCell>
+            <TableCell scope="col" component="th"><b>Uploaded By</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
