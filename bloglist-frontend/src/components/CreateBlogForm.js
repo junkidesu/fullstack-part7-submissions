@@ -28,7 +28,7 @@ const CreateBlogForm = () => {
 
   return (
     <div>
-      <Typography variant='h5' gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Create New Blog
       </Typography>
 
@@ -36,18 +36,18 @@ const CreateBlogForm = () => {
         <div>
           <TextField
             required
-            id='title'
-            variant='filled'
-            label='Title'
+            id="title"
+            variant="filled"
+            label="Title"
             value={newTitle}
             onChange={({ target }) => setNewTitle(target.value)}
           />
         </div>
         <div>
           <TextField
-            id='author'
-            variant='filled'
-            label='Author'
+            id="author"
+            variant="filled"
+            label="Author"
             value={newAuthor}
             onChange={({ target }) => setNewAuthor(target.value)}
           />
@@ -55,14 +55,14 @@ const CreateBlogForm = () => {
         <div>
           <TextField
             required
-            id='url'
-            variant='filled'
-            label='URL'
+            id="url"
+            variant="filled"
+            label="URL"
             value={newUrl}
             onChange={({ target }) => setNewUrl(target.value)}
           />
         </div>
-        <Button variant='contained' color='primary' type='submit'>
+        <Button variant="contained" color="primary" type="submit">
           save
         </Button>
       </form>

@@ -42,11 +42,15 @@ const remove = async (id) => {
 const comment = async (id, body) => {
   const config = {
     headers: {
-      Authorization: token
-    }
+      Authorization: token,
+    },
   }
 
-  const response = await axios.post(`${baseUrl}/${id}/comments`, { body }, config)
+  const response = await axios.post(
+    `${baseUrl}/${id}/comments`,
+    { body },
+    config
+  )
 
   return response.data
 }

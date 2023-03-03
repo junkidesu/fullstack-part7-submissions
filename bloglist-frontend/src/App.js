@@ -12,11 +12,18 @@ import Users from './components/Users'
 import User from './components/User'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
-import { Container, Typography, AppBar, Toolbar, IconButton, Button } from '@mui/material'
+import {
+  Container,
+  Typography,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+} from '@mui/material'
 
 const Home = () => (
   <div>
-    <Typography variant='h5' gutterBottom>
+    <Typography variant="h5" gutterBottom>
       Blogs
     </Typography>
 
@@ -119,7 +126,7 @@ const App = () => {
   return (
     <Container>
       <div>
-        <Typography variant='h4' gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Blogs App
         </Typography>
 

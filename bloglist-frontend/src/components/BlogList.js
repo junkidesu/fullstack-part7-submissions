@@ -18,8 +18,12 @@ const BlogList = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell scope="col" component="th"><b>Blog Title</b></TableCell>
-            <TableCell scope="col" component="th"><b>Uploaded By</b></TableCell>
+            <TableCell scope="col" component="th">
+              <b>Blog Title</b>
+            </TableCell>
+            <TableCell scope="col" component="th">
+              <b>Uploaded By</b>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
