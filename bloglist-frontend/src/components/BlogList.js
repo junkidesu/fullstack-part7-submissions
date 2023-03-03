@@ -14,7 +14,7 @@ const BlogList = () => {
   const blogs = useSelector(({ blogs }) => blogs)
 
   return (
-    <TableContainer component={Paper} sx={{ my: '10px' }}>
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>

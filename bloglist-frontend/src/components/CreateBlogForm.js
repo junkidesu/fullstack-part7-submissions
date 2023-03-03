@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, Typography } from '@mui/material'
 
 const CreateBlogForm = () => {
   const [newTitle, setNewTitle] = useState('')
@@ -28,7 +28,9 @@ const CreateBlogForm = () => {
 
   return (
     <div>
-      <h2>Create New Blog</h2>
+      <Typography variant='h5' gutterBottom>
+        Create New Blog
+      </Typography>
 
       <form onSubmit={handleAddBlog}>
         <div>

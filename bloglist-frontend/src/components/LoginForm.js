@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { loginUser } from '../reducers/userReducer'
-import { TextField, InputAdornment, IconButton, Button } from '@mui/material'
+import { TextField, InputAdornment, IconButton, Button, Typography } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useSelector, useDispatch } from 'react-redux'
 import { Navigate } from 'react-router-dom'
@@ -36,7 +36,9 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h3>log in to application</h3>
+      <Typography variant='h5' gutterBottom>
+        Login to the application
+      </Typography>
 
       <form onSubmit={handleLogin}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>

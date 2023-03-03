@@ -12,9 +12,17 @@ import Users from './components/Users'
 import User from './components/User'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
-import { Container, AppBar, Toolbar, IconButton, Button } from '@mui/material'
+import { Container, Typography, AppBar, Toolbar, IconButton, Button } from '@mui/material'
 
-const Home = () => <BlogList />
+const Home = () => (
+  <div>
+    <Typography variant='h5' gutterBottom>
+      Blogs
+    </Typography>
+
+    <BlogList />
+  </div>
+)
 
 const Menu = () => {
   const dispatch = useDispatch()
@@ -111,7 +119,9 @@ const App = () => {
   return (
     <Container>
       <div>
-        <h2>Blogs App</h2>
+        <Typography variant='h4' gutterBottom>
+          Blogs App
+        </Typography>
 
         <Menu />
 

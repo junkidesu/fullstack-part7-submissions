@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
+  Typography,
   TableContainer,
   Table,
   TableHead,
@@ -15,7 +16,9 @@ const Users = () => {
 
   return (
     <div>
-      <h2>Users</h2>
+      <Typography variant='h5' gutterBottom>
+        Users
+      </Typography>
       <TableContainer component={Paper} sx={{ my: '10px' }}>
         <Table>
           <TableHead>
