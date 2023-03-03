@@ -13,7 +13,7 @@ import User from './components/User'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
-import { Container } from '@mui/material'
+import { Container, AppBar, Toolbar, IconButton, Button } from '@mui/material'
 
 const Home = () => {
   const user = useSelector(({ user }) => user)
@@ -31,16 +31,6 @@ const Home = () => {
 }
 
 const Menu = () => {
-  const menuStyle = {
-    backgroundColor: 'lightgray',
-    padding: '5px',
-    marginBottom: '15px',
-  }
-
-  const padding = {
-    paddingRight: '5px',
-  }
-
   const dispatch = useDispatch()
 
   const user = useSelector(({ user }) => user)
@@ -52,22 +42,39 @@ const Menu = () => {
   }
 
   return (
-    <div style={menuStyle}>
-      <Link to="/" style={padding}>
-        blogs
-      </Link>
-      <Link to="/users" style={padding}>
-        users
-      </Link>
-      {user ? (
-        <span style={padding}>
-          {user.name} logged in <button onClick={handleLogout}>log out</button>
-        </span>
-      ) : (
-        <Link to="/login" style={padding}>
-          login
-        </Link>
-      )}
+    <div>
+      <AppBar
+        position="static"
+        sx={{
+          mb: '10px',
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          ></IconButton>
+          <Button color="inherit" component={Link} to="/">
+            blogs
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            users
+          </Button>
+          {user ? (
+            <span>
+              {user.name} logged in{' '}
+              <Button color="inherit" onClick={handleLogout}>
+                log out
+              </Button>
+            </span>
+          ) : (
+            <Button color="inherit" component={Link} to="/login">
+              login
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
     </div>
   )
 }
@@ -116,7 +123,7 @@ const App = () => {
   return (
     <Container>
       <div>
-        <h2>blogs</h2>
+        <h2>Blogs App</h2>
 
         <Menu />
 
