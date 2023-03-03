@@ -12,6 +12,7 @@ import User from './components/User'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import CreateBlogForm from './components/CreateBlogForm'
+import { Container } from '@mui/material'
 
 const Home = () => (
   <div>
@@ -116,60 +117,64 @@ const App = () => {
 
   if (!user) {
     return (
-      <div>
-        <h2>log in to application</h2>
+      <Container>
+        <div>
+          <h2>log in to application</h2>
 
-        <Notification />
+          <Notification />
 
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              id="username"
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button id="login-button">log in</button>
-        </form>
-      </div>
+          <form onSubmit={handleLogin}>
+            <div>
+              username
+              <input
+                id="username"
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </div>
+            <div>
+              password
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+            <button id="login-button">log in</button>
+          </form>
+        </div>
+      </Container>
     )
   }
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <Container>
+      <div>
+        <h2>blogs</h2>
 
-      <Menu />
+        <Menu />
 
-      <Notification />
+        <Notification />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:id" element={<User user={foundUser} />} />
-        <Route
-          path="/blogs/:id"
-          element={
-            <Blog
-              blog={foundBlog}
-              deleteBlog={() => remove(foundBlog.id)}
-              like={() => like(foundBlog.id)}
-              username={user.username}
-            />
-          }
-        />
-      </Routes>
-    </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<User user={foundUser} />} />
+          <Route
+            path="/blogs/:id"
+            element={
+              <Blog
+                blog={foundBlog}
+                deleteBlog={() => remove(foundBlog.id)}
+                like={() => like(foundBlog.id)}
+                username={user.username}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Container>
   )
 }
 
