@@ -62,12 +62,9 @@ const Menu = () => {
             users
           </Button>
           {user ? (
-            <span>
-              {user.name} logged in{' '}
-              <Button color="inherit" onClick={handleLogout}>
-                log out
-              </Button>
-            </span>
+            <Button color="inherit" onClick={handleLogout}>
+              log out
+            </Button>
           ) : (
             <Button color="inherit" component={Link} to="/login">
               login
