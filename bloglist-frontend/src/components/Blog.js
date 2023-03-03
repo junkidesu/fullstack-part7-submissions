@@ -1,5 +1,12 @@
 import { useDispatch } from 'react-redux'
 import { commentOnBlog } from '../reducers/blogReducer'
+import {
+  Container,
+  Typography,
+  Link,
+  TextField,
+  Button,
+} from '@mui/material'
 
 const Blog = ({ blog, like, deleteBlog, username }) => {
   if (!blog) return null
@@ -16,32 +23,63 @@ const Blog = ({ blog, like, deleteBlog, username }) => {
   }
 
   return (
-    <div>
-      <h2>
+    <Container>
+      <Typography variant="h5" gutterBottom>
         {blog.title} {blog.author}
-      </h2>
-      <a href={blog.url}>{blog.url}</a>
-      <div>
-        {blog.likes} likes <button onClick={like}>like</button>
-      </div>
-      <div>added by {blog.user.name}</div>
-      {username === blog.user.username ? (
-        <button onClick={deleteBlog}>remove</button>
-      ) : null}
+      </Typography>
 
-      <h4>comments</h4>
+      <Link href={blog.url} variant="body1" target="_blank">
+        {blog.url}
+      </Link>
+
+      <Typography variant="body1">
+        {blog.likes} likes &nbsp;
+        <Button variant="contained" color="success" size="small" onClick={like}>
+          like
+        </Button>
+      </Typography>
+
+      <Typography variant="body1" gutterBottom>
+        added by {blog.user.name}&nbsp;
+        {username === blog.user.username ? (
+          <Button
+            variant="contained"
+            size="small"
+            color="error"
+            onClick={deleteBlog}
+          >
+            remove
+          </Button>
+        ) : null}
+      </Typography>
+
+      <Typography variant="h6" gutterBottom>
+        Comments
+      </Typography>
 
       <form onSubmit={handleSubmit}>
-        <input name="comment" />
-        <button type="submit">add comment</button>
+        <TextField
+          variant="outlined"
+          label="New comment"
+          size="small"
+          name="comment"
+          sx={{ width: '350px' }}
+        />
+        <Button variant="contained" type="submit">
+          add comment
+        </Button>
       </form>
 
       <ul>
         {blog.comments.map((c) => (
-          <li key={c.body}>{c.body}</li>
+          <li key={c.body}>
+            <Typography variant="body1" gutterBottom>
+              {c.body}
+            </Typography>
+          </li>
         ))}
       </ul>
-    </div>
+    </Container>
   )
 }
 
