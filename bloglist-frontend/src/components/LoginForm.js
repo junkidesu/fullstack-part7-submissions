@@ -47,42 +47,38 @@ const LoginForm = () => {
       </Typography>
 
       <form onSubmit={handleLogin}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div>
-            <TextField
-              id="username"
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-              variant="filled"
-              label="Username"
-              required
-            />
-          </div>
-          <div>
-            <TextField
-              id="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-              variant="filled"
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '400px' }}>
+          <TextField
+            id="username"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+            variant="filled"
+            label="Username"
+            required
+          />
+          <TextField
+            id="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+            variant="filled"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </div>
         <Button variant="contained" color="primary" type="submit">
           log in
