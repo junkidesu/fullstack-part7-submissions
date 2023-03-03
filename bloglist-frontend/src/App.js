@@ -21,15 +21,20 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-const Home = () => (
-  <div>
-    <Togglable buttonLabel="create new">
-      <CreateBlogForm />
-    </Togglable>
+const Home = () => {
+  const user = useSelector(({ user }) => user)
+  return (
+    <div>
+      {!user ? null : (
+        <Togglable buttonLabel="create new">
+          <CreateBlogForm />
+        </Togglable>
+      )}
 
-    <BlogList />
-  </div>
-)
+      <BlogList />
+    </div>
+  )
+}
 
 const Menu = () => {
   const menuStyle = {
@@ -204,8 +209,20 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/users" element={user? <Users /> : <Navigate replace to="/login" />} />
-          <Route path="/users/:id" element={user? <User user={foundUser} /> : <Navigate replace to="/login" />} />
+          <Route
+            path="/users"
+            element={user ? <Users /> : <Navigate replace to="/login" />}
+          />
+          <Route
+            path="/users/:id"
+            element={
+              user ? (
+                <User user={foundUser} />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
           <Route
             path="/blogs/:id"
             element={
