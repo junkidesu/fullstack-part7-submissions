@@ -4,7 +4,7 @@ import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
 import { loadUsers } from './reducers/usersReducer'
 import { loginUser, logoutUser, restoreUser } from './reducers/userReducer'
 import { setNotification } from './reducers/notificationReducer'
-import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import { Routes, Route, Link, Navigate, useMatch } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import Blog from './components/Blog'
 import Users from './components/Users'
@@ -60,9 +60,15 @@ const Menu = () => {
       <Link to="/users" style={padding}>
         users
       </Link>
-      <span style={padding}>
-        {user.name} logged in <button onClick={handleLogout}>log out</button>
-      </span>
+      {user ? (
+        <span style={padding}>
+          {user.name} logged in <button onClick={handleLogout}>log out</button>
+        </span>
+      ) : (
+        <Link to="/login" style={padding}>
+          login
+        </Link>
+      )}
     </div>
   )
 }
@@ -74,6 +80,11 @@ const LoginForm = () => {
 
   const dispatch = useDispatch()
 
+  const user = useSelector(({ user }) => user)
+
+  if (user) {
+    return <Navigate replace to="/" />
+  }
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event) => {
@@ -93,9 +104,7 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h2>log in to application</h2>
-
-      <Notification />
+      <h3>log in to application</h3>
 
       <form onSubmit={handleLogin}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -169,7 +178,7 @@ const App = () => {
 
   const like = async (id) => {
     const blog = blogs.find((b) => b.id === id)
-    dispatch(likeBlog(blog))
+    await dispatch(likeBlog(blog))
     dispatch(setNotification(`liked blog '${blog.title}'`, 5))
   }
 
@@ -184,14 +193,6 @@ const App = () => {
     }
   }
 
-  if (!user) {
-    return (
-      <Container>
-        <LoginForm />
-      </Container>
-    )
-  }
-
   return (
     <Container>
       <div>
@@ -203,8 +204,8 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<User user={foundUser} />} />
+          <Route path="/users" element={user? <Users /> : <Navigate replace to="/login" />} />
+          <Route path="/users/:id" element={user? <User user={foundUser} /> : <Navigate replace to="/login" />} />
           <Route
             path="/blogs/:id"
             element={
@@ -212,10 +213,11 @@ const App = () => {
                 blog={foundBlog}
                 deleteBlog={() => remove(foundBlog.id)}
                 like={() => like(foundBlog.id)}
-                username={user.username}
+                username={user ? user.username : null}
               />
             }
           />
+          <Route path="/login" element={<LoginForm />} />
         </Routes>
       </div>
     </Container>
