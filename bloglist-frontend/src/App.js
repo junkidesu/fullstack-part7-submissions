@@ -67,11 +67,12 @@ const Menu = () => {
   )
 }
 
-const App = () => {
+const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
   const [showPassword, setShowPassword] = useState(false)
+
+  const dispatch = useDispatch()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -79,6 +80,70 @@ const App = () => {
     event.preventDefault()
   }
 
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    dispatch(
+      loginUser({
+        username,
+        password,
+      })
+    )
+  }
+
+  return (
+    <div>
+      <h2>log in to application</h2>
+
+      <Notification />
+
+      <form onSubmit={handleLogin}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
+            <TextField
+              id="username"
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+              variant="filled"
+              label="Username"
+              required
+            />
+          </div>
+          <div>
+            <TextField
+              id="password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              variant="filled"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </div>
+        </div>
+        <Button variant="contained" color="primary" type="submit">
+          log in
+        </Button>
+      </form>
+    </div>
+  )
+}
+
+const App = () => {
   const user = useSelector(({ user }) => user)
   const blogs = useSelector(({ blogs }) => blogs)
   const users = useSelector(({ users }) => users)
@@ -102,17 +167,6 @@ const App = () => {
     dispatch(restoreUser())
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-
-    dispatch(
-      loginUser({
-        username,
-        password,
-      })
-    )
-  }
-
   const like = async (id) => {
     const blog = blogs.find((b) => b.id === id)
     dispatch(likeBlog(blog))
@@ -133,52 +187,7 @@ const App = () => {
   if (!user) {
     return (
       <Container>
-        <div>
-          <h2>log in to application</h2>
-
-          <Notification />
-
-          <form onSubmit={handleLogin}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>
-                <TextField
-                  id="username"
-                  value={username}
-                  onChange={({ target }) => setUsername(target.value)}
-                  variant="filled"
-                  label="Username"
-                  required
-                />
-              </div>
-              <div>
-                <TextField
-                  id="password"
-                  value={password}
-                  onChange={({ target }) => setPassword(target.value)}
-                  variant="filled"
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-            </div>
-            <Button variant='contained' color='primary' type='submit'>log in</Button>
-          </form>
-        </div>
+        <LoginForm />
       </Container>
     )
   }
