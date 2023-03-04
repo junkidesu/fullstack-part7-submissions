@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginServices from '../services/login'
 import blogService from '../services/blogs'
-import { setNotification } from './notificationReducer'
+import { createNotification } from './notificationReducer'
 
 const userSlice = createSlice({
   name: 'user',
@@ -28,10 +28,16 @@ export const loginUser = (credentials) => async (dispatch) => {
 
     window.localStorage.setItem('loggedInUser', JSON.stringify(user))
 
-    dispatch(setNotification(`logged in as ${user.username}`, 5))
+    dispatch(createNotification({
+      message: `logged in as ${user.username}`,
+      severity: 'success'
+    }, 5))
   } catch (error) {
     console.log(error.response.data.error)
-    dispatch(setNotification(error.response.data.error, 5))
+    dispatch(createNotification({
+      message: error.response.data.error,
+      severity: 'error'
+    }, 5))
   }
 }
 
@@ -39,7 +45,10 @@ export const logoutUser = () => async (dispatch) => {
   dispatch(removeUser())
   blogService.setToken(null)
   localStorage.removeItem('loggedInUser')
-  dispatch(setNotification('logged out', 5))
+  dispatch(createNotification({
+    message: 'logged out',
+    severity: 'info'
+  }, 5))
 }
 
 export const restoreUser = () => async (dispatch) => {

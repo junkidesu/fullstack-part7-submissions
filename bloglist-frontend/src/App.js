@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
 import { loadUsers } from './reducers/usersReducer'
 import { logoutUser, restoreUser } from './reducers/userReducer'
-import { setNotification } from './reducers/notificationReducer'
+import { createNotification } from './reducers/notificationReducer'
 import { Routes, Route, Link, Navigate, useMatch } from 'react-router-dom'
 import LoginForm from './components/LoginForm'
 import BlogList from './components/BlogList'
@@ -109,7 +109,12 @@ const App = () => {
   const like = async (id) => {
     const blog = blogs.find((b) => b.id === id)
     dispatch(likeBlog(blog))
-    dispatch(setNotification(`liked blog '${blog.title}'`, 5))
+    dispatch(
+      createNotification(
+        { message: `liked blog '${blog.title}'`, severity: 'success' },
+        5
+      )
+    )
   }
 
   const remove = async (id) => {
@@ -119,57 +124,54 @@ const App = () => {
 
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       dispatch(deleteBlog(id))
-      dispatch(setNotification(`deleted '${blog.title}'`, 5))
+      dispatch(
+        createNotification(
+          { message: `deleted '${blog.title}'`, severity: 'success' },
+          5
+        )
+      )
     }
   }
 
   return (
     <Container>
-      <div>
-        <Typography variant="h4" gutterBottom>
-          Blogs App
-        </Typography>
+      <Typography variant="h4" gutterBottom>
+        Blogs App
+      </Typography>
 
-        <Menu />
+      <Notification />
 
-        <Notification />
+      <Menu />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/users"
-            element={user ? <Users /> : <Navigate replace to="/login" />}
-          />
-          <Route
-            path="/users/:id"
-            element={
-              user ? (
-                <User user={foundUser} />
-              ) : (
-                <Navigate replace to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/blogs/:id"
-            element={
-              <Blog
-                blog={foundBlog}
-                deleteBlog={() => remove(foundBlog.id)}
-                like={() => like(foundBlog.id)}
-                username={user ? user.username : null}
-              />
-            }
-          />
-          <Route path="/login" element={<LoginForm />} />
-          <Route
-            path="/createBlog"
-            element={
-              user ? <CreateBlogForm /> : <Navigate replace to="/login" />
-            }
-          />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/users"
+          element={user ? <Users /> : <Navigate replace to="/login" />}
+        />
+        <Route
+          path="/users/:id"
+          element={
+            user ? <User user={foundUser} /> : <Navigate replace to="/login" />
+          }
+        />
+        <Route
+          path="/blogs/:id"
+          element={
+            <Blog
+              blog={foundBlog}
+              deleteBlog={() => remove(foundBlog.id)}
+              like={() => like(foundBlog.id)}
+              username={user ? user.username : null}
+            />
+          }
+        />
+        <Route path="/login" element={<LoginForm />} />
+        <Route
+          path="/createBlog"
+          element={user ? <CreateBlogForm /> : <Navigate replace to="/login" />}
+        />
+      </Routes>
     </Container>
   )
 }
